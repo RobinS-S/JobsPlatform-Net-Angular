@@ -1,0 +1,117 @@
+<form [formGroup]="companyForm" (ngSubmit)="onSubmit()">
+  <div class="mb-3">
+    <label for="name" class="form-label">{{ 'companyDetail.name' | translate }} *</label>
+    <input
+      type="text"
+      class="form-control"
+      id="name"
+      formControlName="name"
+      [class.is-invalid]="isInvalid('name')"
+    />
+    <div class="invalid-feedback" *ngIf="isInvalid('name')">
+      {{ getErrorMessage('name', 'companyDetail.name') }}
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <label for="website" class="form-label">{{ 'companyDetail.website' | translate }}</label>
+    <input
+      type="url"
+      class="form-control"
+      id="website"
+      formControlName="website"
+      [class.is-invalid]="isInvalid('website')"
+    />
+    <div class="invalid-feedback" *ngIf="isInvalid('website')">
+      {{ getErrorMessage('website', 'companyDetail.website') }}
+    </div>
+  </div>
+
+  <div formGroupName="location">
+    <h4 class="h5 mb-3">{{ 'companyDetail.location' | translate }}</h4>
+
+    <div class="mb-3">
+      <label for="addressLines" class="form-label"
+        >{{ 'companyDetail.addressLines' | translate }} *</label
+      >
+      <div formArrayName="addressLines">
+        <div class="mb-2" *ngFor="let line of addressLines.controls; let i = index">
+          <div class="input-group">
+            <input type="text" class="form-control" [formControlName]="i" />
+            <button type="button" class="btn btn-outline-danger" (click)="removeAddressLine(i)">
+              <i class="pi pi-trash"></i>
+            </button>
+          </div>
+        </div>
+        <button
+          type="button"
+          class="btn btn-outline-secondary"
+          (click)="addAddressLine()"
+          *ngIf="addressLines.length < 4"
+        >
+          <i class="pi pi-plus me-1"></i>
+          {{ 'companyDetail.addAddressLine' | translate }}
+        </button>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="city" class="form-label">{{ 'companyDetail.city' | translate }} *</label>
+      <input
+        type="text"
+        class="form-control"
+        id="city"
+        formControlName="city"
+        [class.is-invalid]="isInvalid('location.city')"
+      />
+      <div class="invalid-feedback" *ngIf="isInvalid('location.city')">
+        {{ getErrorMessage('location.city', 'companyDetail.city') }}
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="stateProvince" class="form-label">{{
+        'companyDetail.stateProvince' | translate
+      }}</label>
+      <input type="text" class="form-control" id="stateProvince" formControlName="stateProvince" />
+    </div>
+
+    <div class="mb-3">
+      <label for="postalCode" class="form-label">{{
+        'companyDetail.postalCode' | translate
+      }}</label>
+      <input type="text" class="form-control" id="postalCode" formControlName="postalCode" />
+    </div>
+    <div class="mb-3">
+      <label for="countryCode" class="form-label"
+        >{{ 'companyDetail.country' | translate }} *</label
+      >
+      <p-select
+        [options]="countries()"
+        formControlName="countryCode"
+        optionLabel="name"
+        optionValue="code"
+        [filter]="true"
+        class="w-100"
+        [class.is-invalid]="isInvalid('location.countryCode')"
+        placeholder="{{ 'companyDetail.country' | translate }}"
+      ></p-select>
+      <div class="invalid-feedback d-block" *ngIf="isInvalid('location.countryCode')">
+        {{ getErrorMessage('location.countryCode', 'companyDetail.country') }}
+      </div>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-end mt-4">
+    <button type="button" class="btn btn-outline-secondary me-2" (click)="onCancel()">
+      {{ 'generic.cancel' | translate }}
+    </button>
+    <button type="submit" class="btn btn-primary" [disabled]="saving || companyForm.invalid">
+      <span *ngIf="!saving">{{ 'generic.save' | translate }}</span>
+      <span *ngIf="saving">
+        <i class="pi pi-spin pi-spinner me-1"></i>
+        {{ 'generic.saving' | translate }}
+      </span>
+    </button>
+  </div>
+</form>

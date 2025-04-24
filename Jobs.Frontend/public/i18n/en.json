@@ -1,0 +1,100 @@
+{
+  "layout": {
+    "header": {
+      "title": "JobsPlatform",
+      "pages": {
+        "home": "Home",
+        "jobs": "Jobs",
+        "companies": "Companies"
+      }
+    }
+  },
+  "generic": {
+    "errorLoading": "There was an error retrieving the data. Please try again.",
+    "retry": "Retry",
+    "searchPlaceholder": "Enter search term...",
+    "back": "Back",
+    "notFound": "The requested item could not be found.",
+    "delete": "Delete",
+    "deleting": "Deleting...",
+    "confirmDelete": "Confirm deletion",
+    "confirmDeleteMessage": "Are you sure you want to delete this item?",
+    "edit": "Edit",
+    "save": "Save",
+    "saving": "Saving...",
+    "cancel": "Cancel"
+  },
+  "companyList": {
+    "title": "Companies",
+    "description": "Browse and search for companies registered with us. Use the search box to filter by name.",
+    "create": "Create new company",
+    "minActiveJobs": "Min. active jobs"
+  },
+  "companyDetail": {
+    "website": "Website",
+    "location": "Location",
+    "notFound": "The company could not be found.",
+    "backToList": "Back to companies list",
+    "createNew": "Create new company",
+    "editCompany": "Edit company",
+    "name": "Company name",
+    "addressLines": "Address lines",
+    "addAddressLine": "Add address line",
+    "city": "City",
+    "stateProvince": "State/Province",
+    "postalCode": "Postal code",
+    "country": "Country",
+    "confirmDelete": "Confirm company deletion",
+    "viewJobs": "View jobs"
+  },
+  "validation": {
+    "required": "{{field}} is required",
+    "maxLength": "{{field}} must not exceed {{maxLength}} characters",
+    "pattern": "{{field}} has an invalid format",
+    "email": "Please enter a valid email address",
+    "url": "Please enter a valid URL",
+    "invalid": "{{field}} is invalid"
+  },
+  "home": {
+    "welcome": "Welcome to JobsPlatform",
+    "lead": "Find your next opportunity or manage your company's job postings with ease.",
+    "introText": "Start searching today!",
+    "forCompaniesTitle": "For companies",
+    "forCompaniesText": "Easily manage your company profile and job postings in one place.",
+    "forJobSeekersTitle": "For people seeking jobs",
+    "forJobSeekersText": "Browse and apply for jobs in your area."
+  },
+  "jobPostingList": {
+    "title": "Job postings",
+    "description": "Browse and search for available job postings. Filter by category or use the search box.",
+    "create": "Create new job posting",
+    "filterByCategory": "Filter by category",
+    "filterByCompany": "Filter by company"
+  },
+  "jobPostingDetail": {
+    "title": "Job title",
+    "company": "Company",
+    "typeToSearchCompany": "Start typing to search a company...",
+    "category": "Category",
+    "selectCategory": "Select a category",
+    "description": "Job description",
+    "minHoursPerWeek": "Min. hours per week",
+    "maxHoursPerWeek": "Max. hours per week",
+    "workHours": "Work hours",
+    "hoursPerWeek": "hours per week",
+    "remoteWork": "Remote work",
+    "allowsRemoteWork": "Allows remote work",
+    "remoteAllowed": "Remote work allowed",
+    "onSiteOnly": "On-site only",
+    "contactEmail": "Contact email",
+    "jobUrl": "Job link",
+    "notFound": "The job posting could not be found.",
+    "backToList": "Back to job postings list",
+    "createNew": "Create new job posting",
+    "editJobPosting": "Edit job posting",
+    "confirmDelete": "Confirm job posting deletion",
+    "postedOn": "Posted on",
+    "updatedOn": "Updated on",
+    "viewCompany": "View company"
+  }
+}

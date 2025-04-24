@@ -1,0 +1,141 @@
+<div class="mb-4">
+  <a [routerLink]="['/companies']" class="btn btn-link p-0 mb-2">
+    <i class="pi pi-arrow-left"></i> {{ 'generic.back' | translate }}
+  </a>
+  <div class="d-flex justify-content-between align-items-start">
+    <div *ngIf="!facade.isEdit()">
+      <h1 class="h2 mb-1">{{ facade.company()?.name }}</h1>
+      <p class="text-secondary mb-0" *ngIf="facade.company()?.location">
+        <i class="pi pi-map-marker"></i>
+        {{ facade.company()?.location?.city }},
+        {{ facade.company()?.location?.countryCode | countryFromIsoTwo | async }}
+      </p>
+    </div>
+    <div *ngIf="facade.isEdit()">
+      <h1 class="h2 mb-1">
+        {{
+          facade.isNew()
+            ? ('companyDetail.createNew' | translate)
+            : ('companyDetail.editCompany' | translate)
+        }}
+      </h1>
+    </div>
+    <div *ngIf="!facade.isEdit()">
+      <a
+        [routerLink]="['/jobs']"
+        [queryParams]="{ companyId: facade.company()?.id }"
+        class="btn btn-outline-success me-2"
+      >
+        <i class="pi pi-list me-1"></i>
+        <span>{{ 'companyDetail.viewJobs' | translate }}</span>
+      </a>
+      <button class="btn btn-outline-primary me-2" (click)="facade.startEdit()">
+        <i class="pi pi-pencil me-1"></i>
+        <span>{{ 'generic.edit' | translate }}</span>
+      </button>
+      <button
+        class="btn btn-outline-danger"
+        (click)="confirmDelete()"
+        [disabled]="facade.deleting()"
+      >
+        <i class="pi pi-trash me-1"></i>
+        <span *ngIf="!facade.deleting()">{{ 'generic.delete' | translate }}</span>
+        <span *ngIf="facade.deleting()">{{ 'generic.deleting' | translate }}</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="facade.loading()" class="d-flex justify-content-center my-4">
+  <p-progressSpinner></p-progressSpinner>
+</div>
+
+<div *ngIf="facade.error()" class="alert alert-danger my-4" role="alert">
+  <span>{{ 'generic.errorLoading' | translate }}</span>
+  <button class="btn btn-outline-primary" (click)="facade.retry()" *ngIf="!facade.isNew()">
+    {{ 'generic.retry' | translate }}
+  </button>
+</div>
+
+<div *ngIf="facade.notFound()" class="alert alert-warning my-4" role="alert">
+  <span>{{ 'companyDetail.notFound' | translate }}</span>
+  <a [routerLink]="['/companies']" class="btn btn-outline-primary">
+    {{ 'companyDetail.backToList' | translate }}
+  </a>
+</div>
+
+<div
+  *ngIf="facade.company() && !facade.loading() && !facade.error() && !facade.notFound()"
+  class="card"
+>
+  <div class="card-body">
+    <div *ngIf="!facade.isEdit()">
+      <div class="mb-3" *ngIf="facade.company()?.website">
+        <div>
+          <strong>{{ 'companyDetail.website' | translate }}:</strong>
+        </div>
+        <a [href]="facade.company()?.website" target="_blank" rel="noopener noreferrer">
+          {{ facade.company()?.website }}
+        </a>
+      </div>
+      <div class="mb-3" *ngIf="facade.company()?.location">
+        <div>
+          <strong>{{ 'companyDetail.location' | translate }}:</strong>
+        </div>
+        <div class="location-details">
+          <div *ngFor="let line of facade.company()?.location?.addressLines">{{ line }}</div>
+
+          <div>
+            {{ facade.company()?.location?.city }}
+            {{
+              facade.company()?.location?.stateProvince
+                ? ', ' + facade.company()?.location?.stateProvince
+                : ''
+            }}
+            {{
+              facade.company()?.location?.postalCode
+                ? ', ' + facade.company()?.location?.postalCode
+                : ''
+            }}
+          </div>
+
+          <div>{{ facade.company()?.location?.countryCode | countryFromIsoTwo | async }}</div>
+        </div>
+
+        <ng-container *ngIf="facade.company()?.location?.geoLocation as geo">
+          <iframe
+            width="100%"
+            height="600px"
+            [src]="
+              'https://maps.google.com/maps?q=' +
+                geo.latitude +
+                ',' +
+                geo.longitude +
+                '&z=16&output=embed' | safe
+            "
+            class="border-0"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          >
+          </iframe>
+        </ng-container>
+      </div>
+    </div>
+
+    <div *ngIf="facade.isEdit()">
+      <app-company-form
+        [company]="facade.company()"
+        [saving]="facade.saving()"
+        [isNew]="facade.isNew()"
+        (companySaved)="onSaveCompany($event)"
+        (cancelEdit)="onCancelEdit()"
+      ></app-company-form>
+    </div>
+  </div>
+</div>
+
+<p-confirmDialog
+  [style]="{ width: '450px' }"
+  header="{{ 'companyDetail.confirmDelete' | translate }}"
+  icon="pi pi-exclamation-triangle"
+></p-confirmDialog>

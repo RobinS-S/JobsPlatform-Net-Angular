@@ -1,0 +1,161 @@
+<form [formGroup]="jobPostingForm" (ngSubmit)="onSubmit()">
+  <div class="mb-3">
+    <label for="title" class="form-label">{{ 'jobPostingDetail.title' | translate }} *</label>
+    <input
+      type="text"
+      class="form-control"
+      id="title"
+      formControlName="title"
+      [class.is-invalid]="isInvalid('title')"
+    />
+    <div class="invalid-feedback" *ngIf="isInvalid('title')">
+      {{ getErrorMessage('title', 'jobPostingDetail.title') }}
+    </div>
+  </div>
+
+  <div class="mb-3" *ngIf="isNew">
+    <label for="companyId" class="form-label">{{ 'jobPostingDetail.company' | translate }} *</label>
+    <p-autocomplete
+      id="companyId"
+      formControlName="companyId"
+      [suggestions]="companies()"
+      [dropdown]="true"
+      optionLabel="label"
+      optionValue="value"
+      (completeMethod)="search($event)"
+      [style]="{ width: '100%' }"
+      [class.is-invalid]="isInvalid('companyId')"
+      placeholder="{{ 'jobPostingDetail.typeToSearchCompany' | translate }}"
+    ></p-autocomplete>
+    <div class="invalid-feedback d-block" *ngIf="isInvalid('companyId')">
+      {{ getErrorMessage('companyId', 'jobPostingDetail.company') }}
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <label for="category" class="form-label">{{ 'jobPostingDetail.category' | translate }}</label>
+    <p-dropdown
+      id="category"
+      formControlName="category"
+      [options]="jobCategories"
+      [style]="{ width: '100%' }"
+      [class.is-invalid]="isInvalid('category')"
+      placeholder="{{ 'jobPostingDetail.selectCategory' | translate }}"
+    ></p-dropdown>
+    <div class="invalid-feedback d-block" *ngIf="isInvalid('category')">
+      {{ getErrorMessage('category', 'jobPostingDetail.category') }}
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <label for="description" class="form-label">{{
+      'jobPostingDetail.description' | translate
+    }}</label>
+    <textarea
+      pTextarea
+      id="description"
+      formControlName="description"
+      [rows]="5"
+      [autoResize]="true"
+      [class.is-invalid]="isInvalid('description')"
+      [style]="{ width: '100%' }"
+    ></textarea>
+    <div class="invalid-feedback" *ngIf="isInvalid('description')">
+      {{ getErrorMessage('description', 'jobPostingDetail.description') }}
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col-md-6">
+      <label for="minHoursPerWeek" class="form-label">{{
+        'jobPostingDetail.minHoursPerWeek' | translate
+      }}</label>
+      <p-inputNumber
+        id="minHoursPerWeek"
+        formControlName="minHoursPerWeek"
+        [min]="1"
+        [max]="168"
+        [showButtons]="true"
+        [class.is-invalid]="isInvalid('minHoursPerWeek')"
+        [style]="{ width: '100%' }"
+      ></p-inputNumber>
+      <div class="invalid-feedback d-block" *ngIf="isInvalid('minHoursPerWeek')">
+        {{ getErrorMessage('minHoursPerWeek', 'jobPostingDetail.minHoursPerWeek') }}
+      </div>
+    </div>
+    <div class="col-md-6">
+      <label for="maxHoursPerWeek" class="form-label">{{
+        'jobPostingDetail.maxHoursPerWeek' | translate
+      }}</label>
+      <p-inputNumber
+        id="maxHoursPerWeek"
+        formControlName="maxHoursPerWeek"
+        [min]="1"
+        [max]="168"
+        [showButtons]="true"
+        [class.is-invalid]="isInvalid('maxHoursPerWeek')"
+        [style]="{ width: '100%' }"
+      ></p-inputNumber>
+      <div class="invalid-feedback d-block" *ngIf="isInvalid('maxHoursPerWeek')">
+        {{ getErrorMessage('maxHoursPerWeek', 'jobPostingDetail.maxHoursPerWeek') }}
+      </div>
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <div class="form-check">
+      <p-checkbox
+        id="allowsRemoteWork"
+        formControlName="allowsRemoteWork"
+        [binary]="true"
+        [class.is-invalid]="isInvalid('allowsRemoteWork')"
+      ></p-checkbox>
+      <label for="allowsRemoteWork" class="form-check-label ms-2">
+        {{ 'jobPostingDetail.allowsRemoteWork' | translate }}
+      </label>
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <label for="contactEmail" class="form-label">{{
+      'jobPostingDetail.contactEmail' | translate
+    }}</label>
+    <input
+      type="email"
+      class="form-control"
+      id="contactEmail"
+      formControlName="contactEmail"
+      [class.is-invalid]="isInvalid('contactEmail')"
+    />
+    <div class="invalid-feedback" *ngIf="isInvalid('contactEmail')">
+      {{ getErrorMessage('contactEmail', 'jobPostingDetail.contactEmail') }}
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <label for="jobUrl" class="form-label">{{ 'jobPostingDetail.jobUrl' | translate }}</label>
+    <input
+      type="url"
+      class="form-control"
+      id="jobUrl"
+      formControlName="jobUrl"
+      [class.is-invalid]="isInvalid('jobUrl')"
+    />
+    <div class="invalid-feedback" *ngIf="isInvalid('jobUrl')">
+      {{ getErrorMessage('jobUrl', 'jobPostingDetail.jobUrl') }}
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-end mt-4">
+    <button type="button" class="btn btn-outline-secondary me-2" (click)="onCancel()">
+      {{ 'generic.cancel' | translate }}
+    </button>
+    <button type="submit" class="btn btn-primary" [disabled]="saving || jobPostingForm.invalid">
+      <span *ngIf="!saving">{{ 'generic.save' | translate }}</span>
+      <span *ngIf="saving">
+        <i class="pi pi-spin pi-spinner me-1"></i>
+        {{ 'generic.saving' | translate }}
+      </span>
+    </button>
+  </div>
+</form>

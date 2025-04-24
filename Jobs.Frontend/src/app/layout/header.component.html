@@ -1,0 +1,50 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm border-bottom">
+  <div class="container">
+    <a class="navbar-brand fw-bold text-primary" routerLink="/">{{
+      'layout.header.title' | translate
+    }}</a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNav"
+      aria-controls="navbarNav"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            routerLink="/"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+            [attr.aria-current]="router.url === '/' ? 'page' : null"
+            >{{ 'layout.header.pages.home' | translate }}</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            routerLink="/companies"
+            routerLinkActive="active"
+            [attr.aria-current]="router.url.startsWith('/companies') ? 'page' : null"
+            >{{ 'layout.header.pages.companies' | translate }}</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            routerLink="/jobs"
+            routerLinkActive="active"
+            [attr.aria-current]="router.url.startsWith('/jobs') ? 'page' : null"
+            >{{ 'layout.header.pages.jobs' | translate }}</a
+          >
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
